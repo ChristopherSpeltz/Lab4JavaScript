@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Part 1a: Create a web page with an empty unordered list, an input text box, and button. When the user types text into the input form and clicks the button, the text should be added to the list, as a new list element. When the text has been added to the unordered list, clear the text from the input. 
+     -->
+    <p>Enter some text to add to the list</p>
+
+    <input type="text" id="new-text" />
+    <button id="add-text">Add</button>
+    <button id="clear">Clear</button>
+
+    <!-- Empty unordered List -->
+
+    <ul id="list-of-text"></ul>
+
+    <script>
+      // Write your script here
+      let textInput = document.querySelector("#new-text");
+      let addButton = document.querySelector("#add-text");
+      let textList = document.querySelector("#list-of-text");
+      let clearButton = document.querySelector("#clear");
+
+      //   tracking number of items in list
+      let elementsInList = 0;
+      let maxElements = 10;
+      let maxCharacters = 10;
+
+      document.addEventListener("keyup", function () {
+        if (event.keyCode == 13) {
+          addButton.click(); //click the addButton if user presses enter key
+        }
+      });
+
+      addButton.addEventListener("click", function () {
+        let newText = textInput.value;
+        console.log(newText);
+
+        // Part 1d:  Add validation using JavaScript. The form should only accept text of length between 1 and 50 characters.
+        // Ignore the user input if there is no text entered
+        // Display an alert error message if it the text too long - more than 50 characters. Do not clear the text in the input.
+        if (newText.length == 0) {
+          // validate user has typed in some text
+          return;
+        }
+
+        if (newText.length > maxCharacters) {
+          alert("Max number of characters accepted is 50");
+          return;
+        }
+
+        // Part 1c: Prevent the user adding more than 10 items to the list. If the clear button is clicked, the user may keep adding items. 
+        if (elementsInList >= maxElements) {
+          // check the max number is not exceeded.
+          alert("no more elements can be added");
+          return;
+        }
+        // read the text in the input
+        // create a new li element
+        let newListItem = document.createElement("li");
+
+        // the li element text should be the text from the input
+        newListItem.innerHTML = newText;
+
+        // add the new li element as a child of the parent element
+        textList.appendChild(newListItem);
+        // clear the text in the input
+        textInput.value = "";
+
+        elementsInList++;
+      });
+
+      // Part 1b: Add a clear button. When clicked, all the li elements should be removed from the page so the ul list is empty.
+      clearButton.addEventListener("click", function () {
+        textList.innerHTML = "";
+        elementsInList = 0;
+      });
+    </script>
+  </body>
+</html>
